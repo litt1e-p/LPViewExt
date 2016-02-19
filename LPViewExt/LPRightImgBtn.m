@@ -9,6 +9,8 @@
 
 @implementation LPRightImgBtn
 
+@synthesize rightImgAlignment = _rightImgAlignment;
+
 static CGFloat const kRightImgBtnTitleMargin = 5.f;
 
 - (void)layoutSubviews
@@ -16,12 +18,26 @@ static CGFloat const kRightImgBtnTitleMargin = 5.f;
     [super layoutSubviews];
     
     CGRect titleFrame = [self titleLabel].frame;
-    titleFrame.origin.x = 0;
-    self.titleLabel.frame = titleFrame;
-    
     CGRect imageFrame = [self imageView].frame;
-    imageFrame.origin.x = titleFrame.size.width + kRightImgBtnTitleMargin;
-    self.imageView.frame = imageFrame;
+    
+    switch (self.rightImgAlignment) {
+        case RightImgAlignmentRight:
+            imageFrame.origin.x = self.frame.size.width - imageFrame.size.width;
+            titleFrame.origin.x = 0;
+            break;
+            
+        case RightImgAlignmentCenter:
+            imageFrame.origin.x = titleFrame.size.width + (self.frame.size.width - titleFrame.size.width - imageFrame.size.width) / 2;
+            titleFrame.origin.x = 0;
+            break;
+            
+        default:
+            imageFrame.origin.x = self.frame.size.width - imageFrame.size.width;
+            titleFrame.origin.x = imageFrame.origin.x - titleFrame.size.width - kRightImgBtnTitleMargin;
+            break;
+    }
+    self.imageView.frame  = imageFrame;
+    self.titleLabel.frame = titleFrame;
 }
 
 - (void)setTitle:(NSString *)title forState:(UIControlState)state
@@ -34,6 +50,17 @@ static CGFloat const kRightImgBtnTitleMargin = 5.f;
 {
     [super setImage:image forState:state];
     [self sizeToFit];
+}
+
+- (void)setRightImgAlignment:(RightImgAlignment)rightImgAlignment
+{
+    _rightImgAlignment = rightImgAlignment;
+    [self setNeedsLayout];
+}
+
+- (RightImgAlignment)rightImgAlignment
+{
+    return _rightImgAlignment ? : RightImgAlignmentLeft;
 }
 
 @end
