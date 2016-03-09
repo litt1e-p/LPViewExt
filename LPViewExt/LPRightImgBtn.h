@@ -9,9 +9,10 @@
 
 typedef NS_ENUM(NSInteger, RightImgAlignment)
 {
-    RightImgAlignmentLeft = 1,
+    RightImgAlignmentCenter = 1,
     RightImgAlignmentRight,
-    RightImgAlignmentCenter
+    RightImgAlignmentLeft,
+    RightImgAlignmentFill,
 };
 
 @interface LPRightImgBtn : UIButton

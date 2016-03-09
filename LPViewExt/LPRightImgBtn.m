@@ -11,33 +11,14 @@
 
 @synthesize rightImgAlignment = _rightImgAlignment;
 
-static CGFloat const kRightImgBtnTitleMargin = 5.f;
-
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     
-    CGRect titleFrame = [self titleLabel].frame;
-    CGRect imageFrame = [self imageView].frame;
-    
-    switch (self.rightImgAlignment) {
-        case RightImgAlignmentRight:
-            imageFrame.origin.x = self.frame.size.width - imageFrame.size.width;
-            titleFrame.origin.x = 0;
-            break;
-            
-        case RightImgAlignmentCenter:
-            imageFrame.origin.x = titleFrame.size.width + (self.frame.size.width - titleFrame.size.width - imageFrame.size.width) / 2;
-            titleFrame.origin.x = 0;
-            break;
-            
-        default:
-            imageFrame.origin.x = self.frame.size.width - imageFrame.size.width;
-            titleFrame.origin.x = imageFrame.origin.x - titleFrame.size.width - kRightImgBtnTitleMargin;
-            break;
-    }
-    self.imageView.frame  = imageFrame;
-    self.titleLabel.frame = titleFrame;
+    self.transform                  = CGAffineTransformMakeScale(-1.0, 1.0);
+    self.titleLabel.transform       = CGAffineTransformMakeScale(-1.0, 1.0);
+    self.imageView.transform        = CGAffineTransformMakeScale(-1.0, 1.0);
+    self.contentHorizontalAlignment = (UIControlContentHorizontalAlignment)(self.rightImgAlignment - 1);
 }
 
 - (void)setTitle:(NSString *)title forState:(UIControlState)state
@@ -60,7 +41,7 @@ static CGFloat const kRightImgBtnTitleMargin = 5.f;
 
 - (RightImgAlignment)rightImgAlignment
 {
-    return _rightImgAlignment ? : RightImgAlignmentLeft;
+    return _rightImgAlignment ? : RightImgAlignmentRight;
 }
 
 @end
