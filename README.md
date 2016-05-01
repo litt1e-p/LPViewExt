@@ -1,2 +1,2 @@
 # LPViewExt
-some common view of UIKit lib ext 
+some common view of UIKit lib extensions
